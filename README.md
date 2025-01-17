@@ -1,0 +1,2 @@
+# noscrape
+Scraping nostr
