@@ -36,4 +36,11 @@ async def relay_events(source_relay_url, target_relay_url):
 if __name__ == "__main__":
     source_relay_url = os.getenv('SOURCE_RELAY_URL', "wss://relay.nostr.band")
     target_relay_url = os.getenv('TARGET_RELAY_URL', "ws://localhost:7777")
-    asyncio.run(relay_events(source_relay_url, target_relay_url))
+    
+    while True:
+        try:
+            asyncio.run(relay_events(source_relay_url, target_relay_url))
+        except Exception as e:
+            print(f"An error occurred in relay_events: {e}")
+        print("Reconnecting in 5 seconds...")
+        asyncio.sleep(5)
