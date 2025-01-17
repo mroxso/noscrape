@@ -1,0 +1,15 @@
+services:
+  strfry:
+    image: ghcr.io/hoytech/strfry:latest
+    volumes:
+      - ./strfry.conf:/etc/strfry.conf
+      - ./strfry-db:/app/strfry-db
+    ports:
+      - "7777:7777"
+  scraper:
+    build: .
+    depends_on:
+      - strfry
+    environment:
+      - SOURCE_RELAY_URL=wss://relay.nostr.band
+      - TARGET_RELAY_URL=ws://strfry:7777
